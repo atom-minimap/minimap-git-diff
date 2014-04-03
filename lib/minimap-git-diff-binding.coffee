@@ -38,6 +38,8 @@ class MinimapGitDiffBinding
 
   renderDiffs: =>
     return unless @editorView.getPane()?
+    return unless @editorView is @editorView.getPane().activeView
+
     minimapView = @minimap.minimapForEditorView(@editorView)
     lines = minimapView.find('.lines')[0].childNodes[0].childNodes
 
