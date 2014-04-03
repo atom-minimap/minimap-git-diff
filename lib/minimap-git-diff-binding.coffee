@@ -14,7 +14,6 @@ class MinimapGitDiffBinding
     @gitDiff = require(@gitDiffPackage.path)
 
     @subscribe @editorView, 'editor:path-changed', @subscribeToBuffer
-    @subscribe @minimap, 'activated', @subscribeToMinimapView
     @subscribe @editorView, 'editor:contents-modified', @renderDiffs
     @subscribe atom.project.getRepo(), 'statuses-changed', =>
       @scheduleUpdate()
@@ -22,6 +21,11 @@ class MinimapGitDiffBinding
       @scheduleUpdate()
 
     @subscribeToBuffer()
+
+    if @minimap.active
+      @subscribeToMinimapView()
+    else
+      @subscribe @minimap, 'activated', @subscribeToMinimapView
 
   scheduleUpdate: ->
     setImmediate(@updateDiffs)
