@@ -48,6 +48,8 @@ class MinimapGitDiffBinding
     diffs = @getDiffs()
     displayBuffer = @editor.displayBuffer
 
+    return unless diffs?
+
     for {newLines, oldLines, newStart, oldStart} in diffs
       if oldLines is 0 and newLines > 0
         for row in [newStart...newStart + newLines]
