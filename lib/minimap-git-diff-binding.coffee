@@ -60,6 +60,11 @@ class MinimapGitDiffBinding
       else if newLines is 0 and oldLines > 0
         start = displayBuffer.screenRowForBufferRow(newStart)
         end = displayBuffer.lastScreenRowForBufferRow(newStart)
+
+        # start from fist line
+        if start is 0 and start is end
+          start = end = 1
+
         @decorateLines(lines, start, end, 'removed')
 
       else
