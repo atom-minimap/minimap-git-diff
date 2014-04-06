@@ -13,6 +13,7 @@ class MinimapGitDiffBinding
     @minimap = require(@minimapPackage.path)
     @gitDiff = require(@gitDiffPackage.path)
 
+  activate: ->
     @subscribe @editorView, 'editor:path-changed', @subscribeToBuffer
     @subscribe @editorView, 'editor:contents-modified', @renderDiffs
     @subscribe atom.project.getRepo(), 'statuses-changed', =>
@@ -26,6 +27,12 @@ class MinimapGitDiffBinding
       @subscribeToMinimapView()
     else
       @subscribe @minimap, 'activated', @subscribeToMinimapView
+
+    @updateDiffs()
+
+  deactivate: ->
+    @removeDiffs()
+    @unsubscribe()
 
   scheduleUpdate: ->
     setImmediate(@updateDiffs)
@@ -75,7 +82,7 @@ class MinimapGitDiffBinding
 
   decorateLines: (lines, start, end, status) ->
     return if lines.length < end or lines.length < end
-    
+
     for row in [start..end]
       lines[row - 1].className += " git-line-#{status}"
 
@@ -87,7 +94,7 @@ class MinimapGitDiffBinding
     .removeClass('git-line-added git-line-removed git-line-modified')
 
   destroy: ->
-    @unsubscribe()
+    @deactivate()
 
   getPath: -> @buffer.getPath()
 
