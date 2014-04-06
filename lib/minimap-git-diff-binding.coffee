@@ -74,6 +74,8 @@ class MinimapGitDiffBinding
           @decorateLines(lines, start, end, 'modified')
 
   decorateLines: (lines, start, end, status) ->
+    return if lines.length < end or lines.length < end
+    
     for row in [start..end]
       lines[row - 1].className += " git-line-#{status}"
 
