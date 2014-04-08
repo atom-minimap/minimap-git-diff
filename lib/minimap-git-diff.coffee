@@ -2,12 +2,13 @@ MinimapGitDiffBinding = require './minimap-git-diff-binding'
 
 module.exports =
   bindings: {}
+  pluginActive: false
+  isActive: -> @pluginActive
   activate: (state) ->
     gitDiff = atom.packages.getLoadedPackage('git-diff')
     minimap = atom.packages.getLoadedPackage('minimap')
 
     return @deactivate() unless gitDiff? and minimap?
-
 
     atom.workspaceView.eachEditorView (editor) =>
       id = editor.getModel().id
@@ -15,7 +16,6 @@ module.exports =
       @bindings[id] = binding
 
       binding.activate() if @pluginActive
-
 
     minimapModule = require minimap.path
     minimapModule.registerPlugin 'git-diff', this
@@ -26,7 +26,7 @@ module.exports =
 
   activatePlugin: ->
     return if @pluginActive
-    
+
     @pluginActive = true
     binding.activate() for id,binding of @bindings
 
