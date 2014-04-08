@@ -3,7 +3,7 @@
   "main": "./lib/minimap-git-diff",
   "version": "0.3.0",
   "description": "A minimap binding for the git diff package",
-  "repository": "https://github.com/abe33/minimap-git-diff",
+  "repository": "https://github.com/atom-minimap/minimap-git-diff",
   "license": "MIT",
   "engines": {
     "atom": ">0.50.0"
