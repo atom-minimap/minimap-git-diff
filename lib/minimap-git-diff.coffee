@@ -9,6 +9,7 @@ module.exports =
     minimap = atom.packages.getLoadedPackage('minimap')
 
     return @deactivate() unless gitDiff? and minimap?
+    return @deactivate() unless atom.project.getRepo()?
 
     atom.workspaceView.eachEditorView (editor) =>
       id = editor.getModel().id
