@@ -54,7 +54,6 @@ class MinimapGitDiffBinding
 
     diffs = @getDiffs()
     displayBuffer = @editor.displayBuffer
-
     return unless diffs?
 
     for {newLines, oldLines, newStart, oldStart} in diffs
@@ -81,7 +80,7 @@ class MinimapGitDiffBinding
           @decorateLines(lines, start, end, 'modified')
 
   decorateLines: (lines, start, end, status) ->
-    return if lines.length < end or lines.length < end
+    return if lines.length < end or lines.len
 
     for row in [start..end]
       lines[row - 1].className += " git-line-#{status}"
@@ -90,7 +89,7 @@ class MinimapGitDiffBinding
     return unless @editorView.getPane()?
     minimapView = @minimap.minimapForEditorView(@editorView)
 
-    minimapView.find('[class*="git-line-"]')
+    minimapView?.find('[class*="git-line-"]')
     .removeClass('git-line-added git-line-removed git-line-modified')
 
   destroy: ->
