@@ -8,9 +8,8 @@ class MinimapGitDiffBinding
 
   active: false
 
-  constructor: (@editorView, @gitDiffPackage, @minimapPackage) ->
+  constructor: (@editorView, @gitDiffPackage, @minimapView) ->
     {@editor} = @editorView
-    @minimap = require(@minimapPackage.path)
     @gitDiff = require(@gitDiffPackage.path)
 
   activate: ->
@@ -22,11 +21,7 @@ class MinimapGitDiffBinding
       @scheduleUpdate()
 
     @subscribeToBuffer()
-
-    if @minimap.active
-      @subscribeToMinimapView()
-    else
-      @subscribe @minimap, 'activated', @subscribeToMinimapView
+    @subscribeToMinimapView()
 
     @updateDiffs()
 
@@ -39,16 +34,11 @@ class MinimapGitDiffBinding
 
   updateDiffs: =>
     return unless @buffer?
-    return unless @minimap.active
 
     @renderDiffs()
 
   renderDiffs: =>
-    return unless @editorView.getPane()?
-    return unless @editorView is @editorView.getPane().activeView
-
-    minimapView = @minimap.minimapForEditorView(@editorView)
-    lines = minimapView.find('.lines')[0].childNodes[0].childNodes
+    lines = @minimapView.find('.lines')[0].childNodes[0].childNodes
 
     @removeDiffs()
 
@@ -86,10 +76,7 @@ class MinimapGitDiffBinding
       lines[row - 1].className += " git-line-#{status}"
 
   removeDiffs: ->
-    return unless @editorView.getPane()?
-    minimapView = @minimap.minimapForEditorView(@editorView)
-
-    minimapView?.find('[class*="git-line-"]')
+    @minimapView?.find('[class*="git-line-"]')
     .removeClass('git-line-added git-line-removed git-line-modified')
 
   destroy: ->
@@ -114,8 +101,5 @@ class MinimapGitDiffBinding
       @buffer.on 'contents-modified', @updateDiffs
 
   subscribeToMinimapView: =>
-    return unless @editorView.getPane()?
-    minimapView = @minimap.minimapForEditorView(@editorView)
-
-    @subscribe minimapView.miniEditorView, 'minimap:updated', =>
+    @subscribe @minimapView.miniEditorView, 'minimap:updated', =>
       @updateDiffs()

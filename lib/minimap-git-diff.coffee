@@ -42,9 +42,14 @@ class MinimapGitDiff
     @destroyBindings()
 
   createBindings: =>
-    atom.workspaceView.eachEditorView (editor) =>
-      id = editor.getModel().id
-      binding = new MinimapGitDiffBinding editor, @gitDiff, @minimap
+    @minimapModule.eachMinimapView ({view}) =>
+      editorView = view.editorView
+      editor = view.editor
+
+      return unless editor?
+      
+      id = editor.id
+      binding = new MinimapGitDiffBinding editorView, @gitDiff, view
       @bindings[id] = binding
 
       binding.activate()
