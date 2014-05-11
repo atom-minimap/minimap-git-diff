@@ -16,7 +16,7 @@ class MinimapGitDiff
 
     @minimapModule = require @minimap.path
 
-    return @deactivate() unless @minimapModule.versionMatch('0.x')
+    return @deactivate() unless @minimapModule.versionMatch('1.x')
     @minimapModule.registerPlugin 'git-diff', this
 
   deactivate: ->
@@ -49,7 +49,7 @@ class MinimapGitDiff
       editor = view.editor
 
       return unless editor?
-      
+
       id = editor.id
       binding = new MinimapGitDiffBinding editorView, @gitDiff, view
       @bindings[id] = binding
