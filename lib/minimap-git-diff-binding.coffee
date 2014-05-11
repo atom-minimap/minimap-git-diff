@@ -21,7 +21,6 @@ class MinimapGitDiffBinding
       @scheduleUpdate()
 
     @subscribeToBuffer()
-    @subscribeToMinimapView()
 
     @updateDiffs()
 
@@ -38,8 +37,6 @@ class MinimapGitDiffBinding
     @renderDiffs()
 
   renderDiffs: =>
-    lines = @minimapView.find('.lines')[0].childNodes[0].childNodes
-
     @removeDiffs()
 
     diffs = @getDiffs()
@@ -51,7 +48,7 @@ class MinimapGitDiffBinding
         for row in [newStart...newStart + newLines]
           start = displayBuffer.screenRowForBufferRow(row)
           end = displayBuffer.lastScreenRowForBufferRow(row)
-          @decorateLines(lines, start, end, 'added')
+          @decorateLines(start, end, 'added')
 
       else if newLines is 0 and oldLines > 0
         start = displayBuffer.screenRowForBufferRow(newStart)
@@ -61,23 +58,21 @@ class MinimapGitDiffBinding
         if start is 0 and start is end
           start = end = 1
 
-        @decorateLines(lines, start, end, 'removed')
+        @decorateLines(start, end, 'removed')
 
       else
         for row in [newStart...newStart + newLines]
           start = displayBuffer.screenRowForBufferRow(row)
           end = displayBuffer.lastScreenRowForBufferRow(row)
-          @decorateLines(lines, start, end, 'modified')
+          @decorateLines(start, end, 'modified')
 
-  decorateLines: (lines, start, end, status) ->
-    return if lines.length < end or lines.len
+  decorateLines: (start, end, status) ->
 
     for row in [start..end]
-      lines[row - 1].className += " git-line-#{status}"
+      @minimapView.addLineClass(row, "git-line-#{status}")
 
   removeDiffs: ->
-    @minimapView?.find('[class*="git-line-"]')
-    .removeClass('git-line-added git-line-removed git-line-modified')
+    @minimapView?.removeAllLineClasses('git-line-added', 'git-line-removed', 'git-line-modified')
 
   destroy: ->
     @deactivate()
@@ -99,7 +94,3 @@ class MinimapGitDiffBinding
 
     if @buffer = @editor.getBuffer()
       @buffer.on 'contents-modified', @updateDiffs
-
-  subscribeToMinimapView: =>
-    @subscribe @minimapView.miniEditorView, 'minimap:updated', =>
-      @updateDiffs()
