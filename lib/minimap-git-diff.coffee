@@ -15,6 +15,8 @@ class MinimapGitDiff
     return @deactivate() unless atom.project.getRepo()?
 
     @minimapModule = require @minimap.path
+
+    return @deactivate() unless @minimapModule.versionMatch('0.x')
     @minimapModule.registerPlugin 'git-diff', this
 
   deactivate: ->
