@@ -14,7 +14,7 @@ class MinimapGitDiffBinding
 
   activate: ->
     @subscribe @editorView, 'editor:path-changed', @subscribeToBuffer
-    @subscribe @editorView, 'editor:contents-modified', @renderDiffs
+    @subscribe @editorView, 'editor:screen-lines-changed', @renderDiffs
     @subscribe atom.project.getRepo(), 'statuses-changed', =>
       @scheduleUpdate()
     @subscribe atom.project.getRepo(), 'status-changed', (path) =>
