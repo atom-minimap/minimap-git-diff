@@ -1,3 +1,10 @@
+<a name="v1.0.1"></a>
+# v1.0.1 (2014-08-19)
+
+## :bug: Bug Fixes
+
+- Fix CHANGELOG not being at the right place ([af3555fb](https://github.com/atom-minimap/minimap-git-diff/commit/af3555fb40d93607022c7177025f0d8de0a1d7b1))
+
 <a name="v1.0.0"></a>
 # v1.0.0 (2014-08-16)
 
