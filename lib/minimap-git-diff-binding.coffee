@@ -27,11 +27,11 @@ class MinimapGitDiffBinding
     @updateDiffs()
 
   deactivate: ->
-    @removeDiffs()
+    @removeDecorations()
     @unsubscribe()
+    @diffs = null
 
-  scheduleUpdate: ->
-    setImmediate(@updateDiffs)
+  scheduleUpdate: -> setImmediate(@updateDiffs)
 
   updateDiffs: =>
     @removeDecorations()
