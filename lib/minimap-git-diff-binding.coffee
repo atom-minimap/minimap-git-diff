@@ -10,14 +10,16 @@ class MinimapGitDiffBinding
 
   constructor: (@editorView, @gitDiffPackage, @minimapView) ->
     {@editor} = @editorView
+    @decorations = {}
+    @markers = null
     @gitDiff = require(@gitDiffPackage.path)
 
   activate: ->
     @subscribe @editorView, 'editor:path-changed', @subscribeToBuffer
     @subscribe @editorView, 'editor:screen-lines-changed', @renderDiffs
-    @subscribe atom.project.getRepo(), 'statuses-changed', =>
+    @subscribe @getRepo(), 'statuses-changed', =>
       @scheduleUpdate()
-    @subscribe atom.project.getRepo(), 'status-changed', (path) =>
+    @subscribe @getRepo(), 'status-changed', (path) =>
       @scheduleUpdate()
 
     @subscribeToBuffer()
@@ -32,61 +34,48 @@ class MinimapGitDiffBinding
     setImmediate(@updateDiffs)
 
   updateDiffs: =>
-    return unless @buffer?
+    @removeDecorations()
+    if path = @getPath()
+      if @diffs = @getDiffs()
+        @addDecorations(@diffs)
 
-    @renderDiffs()
-
-  renderDiffs: =>
-    @removeDiffs()
-
-    diffs = @getDiffs()
-    displayBuffer = @editor.displayBuffer
-    return unless diffs?
-
-    for {newLines, oldLines, newStart, oldStart} in diffs
+  addDecorations: (diffs) ->
+    for {oldStart, newStart, oldLines, newLines} in diffs
+      startRow = newStart - 1
+      endRow = newStart + newLines - 2
       if oldLines is 0 and newLines > 0
-        for row in [newStart...newStart + newLines]
-          start = displayBuffer.screenRowForBufferRow(row)
-          end = displayBuffer.lastScreenRowForBufferRow(row)
-          @decorateLines(start, end, 'added')
-
+        @markRange(startRow, endRow, '.minimap git-line-added')
       else if newLines is 0 and oldLines > 0
-        start = displayBuffer.screenRowForBufferRow(newStart)
-        end = displayBuffer.lastScreenRowForBufferRow(newStart)
-
-        # start from fist line
-        if start is 0 and start is end
-          start = end = 1
-
-        @decorateLines(start, end, 'removed')
-
+        @markRange(startRow, startRow, '.minimap git-line-removed')
       else
-        for row in [newStart...newStart + newLines]
-          start = displayBuffer.screenRowForBufferRow(row)
-          end = displayBuffer.lastScreenRowForBufferRow(row)
-          @decorateLines(start, end, 'modified')
+        @markRange(startRow, endRow, '.minimap git-line-modified')
+    return
 
-  decorateLines: (start, end, status) ->
+  removeDecorations: ->
+    return unless @markers?
+    marker.destroy() for marker in @markers
+    @markers = null
 
-    for row in [start..end]
-      @minimapView.addLineClass(row, "git-line-#{status}")
-
-  removeDiffs: ->
-    @minimapView?.removeAllLineClasses('git-line-added', 'git-line-removed', 'git-line-modified')
+  markRange: (startRow, endRow, scope) ->
+    marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
+    @minimapView.decorateMarker(marker, type: 'line', scope: scope)
+    @markers ?= []
+    @markers.push(marker)
 
   destroy: ->
+    @removeDecorations()
     @deactivate()
 
-  getPath: -> @buffer.getPath()
+  getPath: -> @buffer?.getPath()
 
-  getRepo: -> atom.project.getRepo()
+  getRepo: -> atom.project?.getRepo()
 
   getDiffs: ->
     @getRepo()?.getLineDiffs(@getPath(), @editorView.getText())
 
   unsubscribeFromBuffer: ->
     if @buffer?
-      @removeDiffs()
+      @removeDecorations()
       @buffer = null
 
   subscribeToBuffer: =>
