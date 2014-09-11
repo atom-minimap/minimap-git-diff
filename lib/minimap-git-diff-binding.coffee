@@ -1,5 +1,6 @@
 {$} = require 'atom'
 {Subscriber, Emitter} = require 'emissary'
+{CompositeDisposable} = require 'event-kit'
 
 module.exports =
 class MinimapGitDiffBinding
@@ -13,14 +14,15 @@ class MinimapGitDiffBinding
     @decorations = {}
     @markers = null
     @gitDiff = require(@gitDiffPackage.path)
+    @subscriptions = new CompositeDisposable
 
   activate: ->
-    @subscribe @editorView, 'editor:path-changed', @subscribeToBuffer
-    @subscribe @editorView, 'editor:screen-lines-changed', @renderDiffs
-    @subscribe @getRepo(), 'statuses-changed', =>
-      @scheduleUpdate()
-    @subscribe @getRepo(), 'status-changed', (path) =>
-      @scheduleUpdate()
+    @getRepo().on 'statuses-changed', @scheduleUpdate
+    @getRepo().on 'status-changed', @scheduleUpdate
+    @subscriptions.add @editorView.getEditor().onDidChangePath @subscribeToBuffer
+    @subscriptions.add @editorView.getEditor().onDidChangeScreenLines @updateDiffs
+    # @subscriptions.add @getRepo().onDidChangeStatuses @scheduleUpdate
+    # @subscriptions.add @getRepo().onDidChangeStatus @scheduleUpdate
 
     @subscribeToBuffer()
 
@@ -28,10 +30,11 @@ class MinimapGitDiffBinding
 
   deactivate: ->
     @removeDecorations()
+    @subscriptions.dispose()
     @unsubscribe()
     @diffs = null
 
-  scheduleUpdate: -> setImmediate(@updateDiffs)
+  scheduleUpdate: => setImmediate(@updateDiffs)
 
   updateDiffs: =>
     @removeDecorations()
@@ -82,4 +85,4 @@ class MinimapGitDiffBinding
     @unsubscribeFromBuffer()
 
     if @buffer = @editor.getBuffer()
-      @buffer.on 'contents-modified', @updateDiffs
+      @subscriptions.add @buffer.onDidStopChanging @updateDiffs
