@@ -7,10 +7,11 @@
   "repository": "https://github.com/atom-minimap/minimap-git-diff",
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">0.125.0"
   },
   "dependencies": {
     "emissary": "1.x",
-    "mixto": "1.x"
+    "mixto": "1.x",
+    "event-kit": "0.7.x"
   }
 }
