@@ -73,6 +73,7 @@ class MinimapGitDiffBinding
 
   unsubscribeFromBuffer: ->
     if @buffer?
+      @bufferSubscription.dispose()
       @removeDecorations()
       @buffer = null
 
@@ -80,4 +81,4 @@ class MinimapGitDiffBinding
     @unsubscribeFromBuffer()
 
     if @buffer = @editor.getBuffer()
-      @subscriptions.add @buffer.onDidStopChanging @updateDiffs
+      @bufferSubscription = @buffer.onDidStopChanging @updateDiffs
