@@ -1,11 +1,8 @@
 {$} = require 'atom'
-{Subscriber, Emitter} = require 'emissary'
 {CompositeDisposable} = require 'event-kit'
 
 module.exports =
 class MinimapGitDiffBinding
-  Subscriber.includeInto(this)
-  Emitter.includeInto(this)
 
   active: false
 
