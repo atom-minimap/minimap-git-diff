@@ -1,11 +1,13 @@
-{Subscriber} = require 'emissary'
+{CompositeDisposable} = require 'event-kit'
 MinimapGitDiffBinding = require './minimap-git-diff-binding'
 
 class MinimapGitDiff
-  Subscriber.includeInto(this)
 
   bindings: {}
   pluginActive: false
+  constructor: ->
+    @subscriptions = new CompositeDisposable
+
   isActive: -> @pluginActive
   activate: (state) ->
     @gitDiff = atom.packages.getLoadedPackage('git-diff')
@@ -33,14 +35,14 @@ class MinimapGitDiff
 
     @pluginActive = true
 
-    @subscribe @minimapModule, 'activated', @createBindings
-    @subscribe @minimapModule, 'deactivated', @destroyBindings
+    @subscriptions.add @minimapModule.onDidActivate @createBindings
+    @subscriptions.add @minimapModule.onDidDeactivate @destroyBindings
 
   deactivatePlugin: ->
     return unless @pluginActive
 
     @pluginActive = false
-    @unsubscribe()
+    @subscriptions.dispose()
     @destroyBindings()
 
   createBindings: =>
