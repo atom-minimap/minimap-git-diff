@@ -45,11 +45,11 @@ class MinimapGitDiffBinding
       startRow = newStart - 1
       endRow = newStart + newLines - 2
       if oldLines is 0 and newLines > 0
-        @markRange(startRow, endRow, '.minimap git-line-added')
+        @markRange(startRow, endRow, '.minimap .git-line-added')
       else if newLines is 0 and oldLines > 0
-        @markRange(startRow, startRow, '.minimap git-line-removed')
+        @markRange(startRow, startRow, '.minimap .git-line-removed')
       else
-        @markRange(startRow, endRow, '.minimap git-line-modified')
+        @markRange(startRow, endRow, '.minimap .git-line-modified')
     return
 
   removeDecorations: ->
