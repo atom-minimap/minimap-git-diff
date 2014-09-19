@@ -1,3 +1,21 @@
+<a name="v3.0.0"></a>
+# v3.0.0 (2014-09-19)
+
+## :sparkles: Features
+
+- Add version test for upcoming version ([0f49e791](https://github.com/atom-minimap/minimap-git-diff/commit/0f49e7914e6e8d3c66df6f7e548c145d03199c1b))
+- Implement support for the new minimap decoration API ([8a2835ee](https://github.com/atom-minimap/minimap-git-diff/commit/8a2835ee74a45e1fbc0b7966cd5cc5f9cc51d247))
+
+## :bug: Bug Fixes
+
+- Fix buffer subscription never disposed ([92a49acc](https://github.com/atom-minimap/minimap-git-diff/commit/92a49accd32e3b320a7ab03cd20e2682cfc4b84b))
+- Fix deprecated minimap methods calls ([cbc02e7b](https://github.com/atom-minimap/minimap-git-diff/commit/cbc02e7b6a63995ac99ab1684819bedd339e68e4))
+- Fix merge conflict ([03864b4c](https://github.com/atom-minimap/minimap-git-diff/commit/03864b4cee3f9454f9b4fd542cdf65732fcb645e))
+- Fix typo in decorations scopes ([bf32873d](https://github.com/atom-minimap/minimap-git-diff/commit/bf32873d7497ead614a26b19e6b1d98e2a400187))
+- Fix deprecation methods calls ([c16ba063](https://github.com/atom-minimap/minimap-git-diff/commit/c16ba0630f1aa60986b5546c9220ef7009068e32))
+- Fix deprecated calls to event subscription ([68a1f5f3](https://github.com/atom-minimap/minimap-git-diff/commit/68a1f5f3d669483d1fa8004726a7de340b0c2db1))
+- Fix legacy code remaining in deactivate ([a7e925ef](https://github.com/atom-minimap/minimap-git-diff/commit/a7e925ef73975aed65e715c30180812995ba2d30))
+
 <a name="v1.0.1"></a>
 # v1.0.1 (2014-08-19)
 
