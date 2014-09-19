@@ -1,3 +1,10 @@
+<a name="v3.0.1"></a>
+# v3.0.1 (2014-09-19)
+
+## :bug: Bug Fixes
+
+- Fix broken version test ([a6cca133](https://github.com/atom-minimap/minimap-git-diff/commit/a6cca133f70aef9e6ae9c1c81117145939443330))
+
 <a name="v3.0.0"></a>
 # v3.0.0 (2014-09-19)
 
