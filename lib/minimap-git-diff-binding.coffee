@@ -14,8 +14,13 @@ class MinimapGitDiffBinding
     @subscriptions = new CompositeDisposable
 
   activate: ->
-    @subscriptions.add @editorView.getEditor().onDidChangePath @subscribeToBuffer
-    @subscriptions.add @editorView.getEditor().onDidChangeScreenLines @updateDiffs
+    editor = @editorView.getEditor()
+    @subscriptions.add editor.onDidChangePath @subscribeToBuffer
+    if editor.onDidChangeScreenLines?
+      @subscriptions.add editor.onDidChangeScreenLines @updateDiffs
+    else
+      @subscriptions.add editor.onDidChange @updateDiffs
+
     @subscriptions.add @getRepo().onDidChangeStatuses @scheduleUpdate
     @subscriptions.add @getRepo().onDidChangeStatus @scheduleUpdate
 
