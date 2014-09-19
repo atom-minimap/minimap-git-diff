@@ -14,6 +14,12 @@ class MinimapGitDiffBinding
     @subscriptions = new CompositeDisposable
 
   activate: ->
+    minimapPackage = atom.packages.getLoadedPackage('minimap')
+    return @deactivate() unless minimapPackage?
+
+    minimap = require(minimapPackage.path)
+    return @deactivate() unless minimap.versionMatch('3.x')
+
     @subscriptions.add @editorView.getEditor().onDidChangePath @subscribeToBuffer
     @subscriptions.add @editorView.getEditor().onDidChangeScreenLines @updateDiffs
     @subscriptions.add @getRepo().onDidChangeStatuses @scheduleUpdate
