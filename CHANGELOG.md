@@ -1,3 +1,10 @@
+<a name="v3.0.2"></a>
+# v3.0.2 (2014-09-19)
+
+## :bug: Bug Fixes
+
+- Fix broken activation due to renamed event in nightly ([15cafb4d](https://github.com/atom-minimap/minimap-git-diff/commit/15cafb4d6d13444944a2609ce6d22f0f55454c73))
+
 <a name="v3.0.1"></a>
 # v3.0.1 (2014-09-19)
 
