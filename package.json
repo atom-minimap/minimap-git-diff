@@ -1,7 +1,7 @@
 {
   "name": "minimap-git-diff",
   "main": "./lib/minimap-git-diff",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A minimap binding for the git diff package",
   "author": "Cédric Néhémie <cedric.nehemie@gmail.com>",
   "repository": "https://github.com/atom-minimap/minimap-git-diff",
