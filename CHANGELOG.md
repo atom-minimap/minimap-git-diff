@@ -1,3 +1,10 @@
+<a name="v3.0.3"></a>
+# v3.0.3 (2014-09-20)
+
+## :bug: Bug Fixes
+
+- Fix remaining call to unsubscribe in binding ([9f5a639f](https://github.com/atom-minimap/minimap-git-diff/commit/9f5a639f23aeb184a89769b1f788e51ea95ce739))
+
 <a name="v3.0.2"></a>
 # v3.0.2 (2014-09-19)
 
