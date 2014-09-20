@@ -31,7 +31,6 @@ class MinimapGitDiffBinding
   deactivate: ->
     @removeDecorations()
     @subscriptions.dispose()
-    @unsubscribe()
     @diffs = null
 
   scheduleUpdate: => setImmediate(@updateDiffs)
