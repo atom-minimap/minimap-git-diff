@@ -1,3 +1,10 @@
+<a name="v3.0.4"></a>
+# v3.0.4 (2014-09-24)
+
+## :bug: Bug Fixes
+
+- Fix missing hook on project events ([a600e632](https://github.com/atom-minimap/minimap-git-diff/commit/a600e63241c57a37d65bf38b703c69a8253f9324), [#1](https://github.com/atom-minimap/minimap-git-diff/issues/1))
+
 <a name="v3.0.3"></a>
 # v3.0.3 (2014-09-20)
 
