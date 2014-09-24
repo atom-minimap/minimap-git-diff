@@ -1,4 +1,4 @@
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable, Disposable} = require 'event-kit'
 MinimapGitDiffBinding = require './minimap-git-diff-binding'
 
 class MinimapGitDiff
@@ -14,7 +14,6 @@ class MinimapGitDiff
     @minimap = atom.packages.getLoadedPackage('minimap')
 
     return @deactivate() unless @gitDiff? and @minimap?
-    return @deactivate() unless atom.project.getRepo()?
 
     @minimapModule = require @minimap.path
 
@@ -31,11 +30,10 @@ class MinimapGitDiff
   activatePlugin: ->
     return if @pluginActive
 
-    @createBindings()
-
+    @activateBinding()
     @pluginActive = true
 
-    @subscriptions.add @minimapModule.onDidActivate @createBindings
+    @subscriptions.add @minimapModule.onDidActivate @activateBinding
     @subscriptions.add @minimapModule.onDidDeactivate @destroyBindings
 
   deactivatePlugin: ->
@@ -44,6 +42,15 @@ class MinimapGitDiff
     @pluginActive = false
     @subscriptions.dispose()
     @destroyBindings()
+
+  activateBinding: =>
+    @createBindings() if atom.project.getRepo()?
+
+    @subscriptions.add @asDisposable atom.project.on 'path-changed', =>
+      if atom.project.getRepo()?
+        @createBindings()
+      else
+        @destroyBindings()
 
   createBindings: =>
     @minimapModule.eachMinimapView ({view}) =>
@@ -61,5 +68,7 @@ class MinimapGitDiff
   destroyBindings: =>
     binding.destroy() for id,binding of @bindings
     @bindings = {}
+
+  asDisposable: (subscription) -> new Disposable -> subscription.off()
 
 module.exports = new MinimapGitDiff
