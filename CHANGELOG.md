@@ -1,3 +1,10 @@
+<a name="v3.0.6"></a>
+# v3.0.6 (2014-10-23)
+
+## :bug: Bug Fixes
+
+- Fix requiring packages by using a promise ([38096519](https://github.com/atom-minimap/minimap-git-diff/commit/3809651918431541db84a4dbc05502dbe5440f11))
+
 <a name="v3.0.5"></a>
 # v3.0.5 (2014-10-22)
 
