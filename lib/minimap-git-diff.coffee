@@ -15,7 +15,7 @@ class MinimapGitDiff
 
     return @deactivate() unless @gitDiff? and @minimap?
 
-    @minimapModule = require @minimap.path
+    @minimapModule = require(@minimap.mainModulePath or @minimap.path)
 
     return @deactivate() unless @minimapModule.versionMatch('3.x')
     @minimapModule.registerPlugin 'git-diff', this
