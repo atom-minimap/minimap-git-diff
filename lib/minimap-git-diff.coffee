@@ -10,15 +10,18 @@ class MinimapGitDiff
 
   isActive: -> @pluginActive
   activate: (state) ->
-    @gitDiff = atom.packages.getLoadedPackage('git-diff')
-    @minimap = atom.packages.getLoadedPackage('minimap')
+    disposable = atom.packages.onDidActivateAll =>
+      disposable.dispose()
 
-    return @deactivate() unless @gitDiff? and @minimap?
+      @gitDiff = atom.packages.getLoadedPackage('git-diff')
+      @minimap = atom.packages.getLoadedPackage('minimap')
 
-    @minimapModule = require(@minimap.mainModulePath or @minimap.path)
+      return @deactivate() unless @gitDiff? and @minimap?
 
-    return @deactivate() unless @minimapModule.versionMatch('3.x')
-    @minimapModule.registerPlugin 'git-diff', this
+      @minimapModule = require(@minimap.mainModulePath or @minimap.path)
+
+      return @deactivate() unless @minimapModule.versionMatch('3.x')
+      @minimapModule.registerPlugin 'git-diff', this
 
   deactivate: ->
     binding.destroy() for id,binding of @bindings
