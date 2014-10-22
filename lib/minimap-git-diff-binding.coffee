@@ -6,11 +6,10 @@ class MinimapGitDiffBinding
 
   active: false
 
-  constructor: (@editorView, @gitDiffPackage, @minimapView) ->
+  constructor: (@editorView, @gitDiff, @minimapView) ->
     {@editor} = @editorView
     @decorations = {}
     @markers = null
-    @gitDiff = require(@gitDiffPackage.mainModulePath or @gitDiffPackage.path)
     @subscriptions = new CompositeDisposable
 
   activate: ->

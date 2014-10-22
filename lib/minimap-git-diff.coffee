@@ -1,6 +1,29 @@
 {CompositeDisposable, Disposable} = require 'event-kit'
 MinimapGitDiffBinding = require './minimap-git-diff-binding'
 
+requirePackages = (packages...) ->
+  new Promise (resolve, reject) ->
+    required = []
+    promises = []
+    failures = []
+    remains = packages.length
+
+    solved = ->
+      remains--
+      return unless remains is 0
+      return reject(failures) if failures.length > 0
+      resolve(required)
+
+    packages.forEach (pkg, i) ->
+      promises.push(atom.packages.activatePackage(pkg)
+      .then (activatedPackage) ->
+        required[i] = activatedPackage.mainModule
+        solved()
+      .fail (reason) ->
+        failures[i] = reason
+        solved()
+      )
+
 class MinimapGitDiff
 
   bindings: {}
@@ -10,25 +33,15 @@ class MinimapGitDiff
 
   isActive: -> @pluginActive
   activate: (state) ->
-    disposable = atom.packages.onDidActivateAll =>
-      disposable.dispose()
-
-      @gitDiff = atom.packages.getLoadedPackage('git-diff')
-      @minimap = atom.packages.getLoadedPackage('minimap')
-
-      return @deactivate() unless @gitDiff? and @minimap?
-
-      @minimapModule = require(@minimap.mainModulePath or @minimap.path)
-
-      return @deactivate() unless @minimapModule.versionMatch('3.x')
-      @minimapModule.registerPlugin 'git-diff', this
+    requirePackages('minimap', 'git-diff').then ([@minimap, @gitDiff]) =>
+      return @deactivate() unless @minimap.versionMatch('3.x')
+      @minimap.registerPlugin 'git-diff', this
 
   deactivate: ->
     binding.destroy() for id,binding of @bindings
     @bindings = {}
     @gitDiff = null
     @minimap = null
-    @minimapModule = null
 
   activatePlugin: ->
     return if @pluginActive
@@ -36,8 +49,8 @@ class MinimapGitDiff
     @activateBinding()
     @pluginActive = true
 
-    @subscriptions.add @minimapModule.onDidActivate @activateBinding
-    @subscriptions.add @minimapModule.onDidDeactivate @destroyBindings
+    @subscriptions.add @minimap.onDidActivate @activateBinding
+    @subscriptions.add @minimap.onDidDeactivate @destroyBindings
 
   deactivatePlugin: ->
     return unless @pluginActive
@@ -56,7 +69,7 @@ class MinimapGitDiff
         @destroyBindings()
 
   createBindings: =>
-    @minimapModule.eachMinimapView ({view}) =>
+    @minimap.eachMinimapView ({view}) =>
       editorView = view.editorView
       editor = view.editor
 
