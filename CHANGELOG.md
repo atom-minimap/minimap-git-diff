@@ -1,3 +1,10 @@
+<a name="v3.0.5"></a>
+# v3.0.5 (2014-10-22)
+
+## :bug: Bug Fixes
+
+- Fix access to packages dependencies ([422ef35a](https://github.com/atom-minimap/minimap-git-diff/commit/422ef35ae21f1bb6d3eb8057757599af5e457292))
+
 <a name="v3.0.4"></a>
 # v3.0.4 (2014-09-24)
 
