@@ -58,10 +58,13 @@ class MinimapGitDiffBinding
     @markers = null
 
   markRange: (startRow, endRow, scope) ->
-    marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
-    @minimapView.decorateMarker(marker, type: 'line', scope: scope)
-    @markers ?= []
-    @markers.push(marker)
+    try
+      marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
+      @minimapView.decorateMarker(marker, type: 'line', scope: scope)
+      @markers ?= []
+      @markers.push(marker)
+    catch e
+      console.warn 'markRange failed', e.stack
 
   destroy: ->
     @removeDecorations()
