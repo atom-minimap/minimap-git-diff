@@ -1,3 +1,13 @@
+<a name="v3.0.8"></a>
+# v3.0.8 (2014-10-29)
+
+- Use `atom-utils` for packages requires.
+- Add defensive code in `markRange` for the case the text editor is destroyed.
+
+## :bug: Bug Fixes
+
+- Fix requiring packages by using a promise ([38096519](https://github.com/atom-minimap/minimap-git-diff/commit/3809651918431541db84a4dbc05502dbe5440f11))
+
 <a name="v3.0.6"></a>
 # v3.0.6 (2014-10-23)
 
