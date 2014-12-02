@@ -7,21 +7,22 @@ class MinimapGitDiffBinding
   active: false
 
   constructor: (@editorView, @gitDiff, @minimapView) ->
-    {@editor} = @editorView
+    @editor = @editorView.getModel()
     @decorations = {}
     @markers = null
     @subscriptions = new CompositeDisposable
 
   activate: ->
-    editor = @editorView.getEditor()
-    @subscriptions.add editor.onDidChangePath @subscribeToBuffer
-    if editor.onDidChangeScreenLines?
-      @subscriptions.add editor.onDidChangeScreenLines @updateDiffs
+    @subscriptions.add @editor.onDidChangePath @subscribeToBuffer
+    if @editor.onDidChangeScreenLines?
+      @subscriptions.add @editor.onDidChangeScreenLines @updateDiffs
     else
-      @subscriptions.add editor.onDidChange @updateDiffs
+      @subscriptions.add @editor.onDidChange @updateDiffs
 
-    @subscriptions.add @getRepo().onDidChangeStatuses @scheduleUpdate
-    @subscriptions.add @getRepo().onDidChangeStatus @scheduleUpdate
+    repository = @getRepo()
+
+    @subscriptions.add repository.onDidChangeStatuses @scheduleUpdate
+    @subscriptions.add repository.onDidChangeStatus @scheduleUpdate
 
     @subscribeToBuffer()
 
@@ -72,10 +73,12 @@ class MinimapGitDiffBinding
 
   getPath: -> @buffer?.getPath()
 
-  getRepo: -> atom.project?.getRepo()
+  getRepositories: -> atom.project?.getRepositories()
+
+  getRepo: -> @getRepositories()?[0]
 
   getDiffs: ->
-    @getRepo()?.getLineDiffs(@getPath(), @editorView.getText())
+    @getRepo()?.getLineDiffs(@getPath(), @buffer.getText())
 
   unsubscribeFromBuffer: ->
     if @buffer?

@@ -25,11 +25,14 @@ class MinimapGitDiff
   activatePlugin: ->
     return if @pluginActive
 
-    @activateBinding()
-    @pluginActive = true
+    try
+      @activateBinding()
+      @pluginActive = true
 
-    @subscriptions.add @minimap.onDidActivate @activateBinding
-    @subscriptions.add @minimap.onDidDeactivate @destroyBindings
+      @subscriptions.add @minimap.onDidActivate @activateBinding
+      @subscriptions.add @minimap.onDidDeactivate @destroyBindings
+    catch e
+      console.log e
 
   deactivatePlugin: ->
     return unless @pluginActive
@@ -41,8 +44,8 @@ class MinimapGitDiff
   activateBinding: =>
     @createBindings() if atom.project.getRepo()?
 
-    @subscriptions.add @asDisposable atom.project.on 'path-changed', =>
-      if atom.project.getRepo()?
+    @subscriptions.add atom.project.onDidChangePaths =>
+      if atom.project.getRepositories().length
         @createBindings()
       else
         @destroyBindings()
