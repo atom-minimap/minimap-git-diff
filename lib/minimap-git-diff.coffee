@@ -53,7 +53,7 @@ class MinimapGitDiff
   createBindings: =>
     MinimapGitDiffBinding ||= require './minimap-git-diff-binding'
 
-    @minimap.eachMinimapView ({view}) =>
+    @subscriptions.add @minimap.observeMinimaps ({view}) =>
       editorView = view.editorView
       editor = view.editor
 
