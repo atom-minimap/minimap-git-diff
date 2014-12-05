@@ -1,3 +1,8 @@
+<a name="v3.0.10"></a>
+# v3.0.10 (2014-12-05)
+
+- Remove warning and prevent marker creation if editor was destroyed
+
 <a name="v3.0.9"></a>
 # v3.0.9 (2014-12-05)
 
