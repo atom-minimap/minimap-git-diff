@@ -37,9 +37,8 @@ class MinimapGitDiffBinding
 
   updateDiffs: =>
     @removeDecorations()
-    if path = @getPath()
-      if @diffs = @getDiffs()
-        @addDecorations(@diffs)
+    if @getPath() and @diffs = @getDiffs()
+      @addDecorations(@diffs)
 
   addDecorations: (diffs) ->
     for {oldStart, newStart, oldLines, newLines} in diffs
@@ -51,7 +50,6 @@ class MinimapGitDiffBinding
         @markRange(startRow, startRow, '.minimap .git-line-removed')
       else
         @markRange(startRow, endRow, '.minimap .git-line-modified')
-    return
 
   removeDecorations: ->
     return unless @markers?
@@ -59,13 +57,11 @@ class MinimapGitDiffBinding
     @markers = null
 
   markRange: (startRow, endRow, scope) ->
-    try
-      marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
-      @minimapView.decorateMarker(marker, type: 'line', scope: scope)
-      @markers ?= []
-      @markers.push(marker)
-    catch e
-      console.warn 'markRange failed', e.stack
+    return if @editor.getBuffer().isDestroyed()
+    marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
+    @minimapView.decorateMarker(marker, type: 'line', scope: scope)
+    @markers ?= []
+    @markers.push(marker)
 
   destroy: ->
     @removeDecorations()
