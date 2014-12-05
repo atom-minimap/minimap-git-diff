@@ -57,7 +57,7 @@ class MinimapGitDiffBinding
     @markers = null
 
   markRange: (startRow, endRow, scope) ->
-    return if @editor.getBuffer().isDestroyed()
+    return if @editor.displayBuffer.isDestroyed()
     marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
     @minimapView.decorateMarker(marker, type: 'line', scope: scope)
     @markers ?= []
