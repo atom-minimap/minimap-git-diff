@@ -1,3 +1,10 @@
+<a name="v3.0.11"></a>
+# v3.0.11 (2014-12-05)
+
+## :bug: Bug Fixes
+
+- Fix error still raised when adding marker to a destroyed buffer ([afc00dd7](https://github.com/abe33/minimap-git-diff/commit/afc00dd79a7aff44fcbdc4840b0eee79376bfdb7))
+
 <a name="v3.0.10"></a>
 # v3.0.10 (2014-12-05)
 
