@@ -1,3 +1,10 @@
+<a name="v3.1.0"></a>
+# v3.1.0 (2015-01-05)
+
+## :sparkles: Features
+
+- Implement support for both v3 and v4 API ([84f2b31b](https://github.com/abe33/minimap-git-diff/commit/84f2b31b95ddd7f556c31ac622970c928c500c0e))
+
 <a name="v3.0.11"></a>
 # v3.0.11 (2014-12-05)
 
