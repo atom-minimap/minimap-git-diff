@@ -13,7 +13,7 @@ class MinimapGitDiff
   isActive: -> @pluginActive
   activate: (state) ->
     requirePackages('minimap', 'git-diff').then ([@minimap, @gitDiff]) =>
-      return @deactivate() unless @minimap.versionMatch('>= 3.0.0')
+      return @deactivate() unless @minimap.versionMatch('>= 3.5.0')
       @minimap.registerPlugin 'git-diff', this
 
   deactivate: ->
