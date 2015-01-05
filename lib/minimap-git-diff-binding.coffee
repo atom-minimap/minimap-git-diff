@@ -6,32 +6,21 @@ class MinimapGitDiffBinding
 
   active: false
 
-  constructor: (@editorView, @gitDiff, @minimapView) ->
-    @editor = @editorView.getModel()
+  constructor: (@gitDiff, @minimap) ->
+    @editor = @minimap.textEditor
     @decorations = {}
     @markers = null
     @subscriptions = new CompositeDisposable
 
-  activate: ->
-    @subscriptions.add @editor.onDidChangePath @subscribeToBuffer
-    if @editor.onDidChangeScreenLines?
-      @subscriptions.add @editor.onDidChangeScreenLines @updateDiffs
-    else
-      @subscriptions.add @editor.onDidChange @updateDiffs
+    @subscriptions.add @editor.onDidChange @updateDiffs
+    @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
 
     repository = @getRepo()
 
     @subscriptions.add repository.onDidChangeStatuses @scheduleUpdate
     @subscriptions.add repository.onDidChangeStatus @scheduleUpdate
 
-    @subscribeToBuffer()
-
-    @updateDiffs()
-
-  deactivate: ->
-    @removeDecorations()
-    @subscriptions.dispose()
-    @diffs = null
+    @scheduleUpdate()
 
   scheduleUpdate: => setImmediate(@updateDiffs)
 
@@ -59,31 +48,20 @@ class MinimapGitDiffBinding
   markRange: (startRow, endRow, scope) ->
     return if @editor.displayBuffer.isDestroyed()
     marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
-    @minimapView.decorateMarker(marker, type: 'line', scope: scope)
+    @minimap.decorateMarker(marker, type: 'line', scope: scope)
     @markers ?= []
     @markers.push(marker)
 
   destroy: ->
     @removeDecorations()
-    @deactivate()
+    @subscriptions.dispose()
+    @diffs = null
 
-  getPath: -> @buffer?.getPath()
+  getPath: -> @editor.getBuffer()?.getPath()
 
   getRepositories: -> atom.project?.getRepositories()
 
   getRepo: -> @getRepositories()?[0]
 
   getDiffs: ->
-    @getRepo()?.getLineDiffs(@getPath(), @buffer.getText())
-
-  unsubscribeFromBuffer: ->
-    if @buffer?
-      @bufferSubscription.dispose()
-      @removeDecorations()
-      @buffer = null
-
-  subscribeToBuffer: =>
-    @unsubscribeFromBuffer()
-
-    if @buffer = @editor.getBuffer()
-      @bufferSubscription = @buffer.onDidStopChanging @updateDiffs
+    @getRepo()?.getLineDiffs(@getPath(), @editor.getBuffer().getText())
