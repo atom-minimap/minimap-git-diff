@@ -7,7 +7,7 @@ class MinimapGitDiffBinding
   active: false
 
   constructor: (@gitDiff, @minimap) ->
-    @editor = @minimap.textEditor
+    @editor = @minimap.getTextEditor()
     @decorations = {}
     @markers = null
     @subscriptions = new CompositeDisposable

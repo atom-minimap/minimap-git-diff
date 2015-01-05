@@ -55,7 +55,7 @@ class MinimapGitDiff
 
     @subscriptions.add @minimap.observeMinimaps (o) =>
       minimap = o.view ? o
-      editor = minimap.textEditor
+      editor = minimap.getTextEditor()
 
       return unless editor?
 
