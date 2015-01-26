@@ -1,3 +1,10 @@
+<a name="v3.1.1"></a>
+# v3.1.1 (2015-01-26)
+
+## :bug: Bug Fixes
+
+- Fix deprecations ([89e22169](https://github.com/abe33/minimap-git-diff/commit/89e22169a1bdbb476771784c9474b21b5e40f561))
+
 <a name="v3.1.0"></a>
 # v3.1.0 (2015-01-05)
 
