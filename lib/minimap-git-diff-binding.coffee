@@ -1,4 +1,3 @@
-{$} = require 'atom'
 {CompositeDisposable} = require 'event-kit'
 
 module.exports =
