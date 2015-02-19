@@ -42,10 +42,11 @@ class MinimapGitDiff
     @destroyBindings()
 
   activateBinding: =>
-    @createBindings() if atom.project.getRepositories().length > 0
+    @createBindings() if @getRepositories().length > 0
 
     @subscriptions.add atom.project.onDidChangePaths =>
-      if atom.project.getRepositories().length > 0
+
+      if @getRepositories().length > 0
         @createBindings()
       else
         @destroyBindings()
@@ -62,6 +63,8 @@ class MinimapGitDiff
       id = editor.id
       binding = new MinimapGitDiffBinding @gitDiff, minimap
       @bindings[id] = binding
+
+  getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
 
   destroyBindings: =>
     binding.destroy() for id,binding of @bindings

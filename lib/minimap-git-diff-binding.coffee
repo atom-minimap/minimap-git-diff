@@ -11,10 +11,10 @@ class MinimapGitDiffBinding
     @markers = null
     @subscriptions = new CompositeDisposable
 
+    repository = @getRepo()
+
     @subscriptions.add @editor.onDidChange @updateDiffs
     @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
-
-    repository = @getRepo()
 
     @subscriptions.add repository.onDidChangeStatuses @scheduleUpdate
     @subscriptions.add repository.onDidChangeStatus @scheduleUpdate
@@ -58,7 +58,7 @@ class MinimapGitDiffBinding
 
   getPath: -> @editor.getBuffer()?.getPath()
 
-  getRepositories: -> atom.project?.getRepositories()
+  getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
 
   getRepo: -> @getRepositories()?[0]
 
