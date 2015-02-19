@@ -1,3 +1,10 @@
+<a name="v3.1.2"></a>
+# v3.1.2 (2015-02-19)
+
+## :bug: Bug Fixes
+
+- Fix broken binding when `getRepositories` returns `[null]` ([ad89d101](https://github.com/abe33/minimap-git-diff/commit/ad89d101cbcc93ee3d2e084bfd03bc34b60f786a), [#5](https://github.com/abe33/minimap-git-diff/issues/5))
+
 <a name="v3.1.1"></a>
 # v3.1.1 (2015-01-26)
 
