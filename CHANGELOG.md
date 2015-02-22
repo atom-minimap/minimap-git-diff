@@ -3,28 +3,28 @@
 
 ## :bug: Bug Fixes
 
-- Fix broken binding when `getRepositories` returns `[null]` ([ad89d101](https://github.com/abe33/minimap-git-diff/commit/ad89d101cbcc93ee3d2e084bfd03bc34b60f786a), [#5](https://github.com/abe33/minimap-git-diff/issues/5))
+- Fix broken binding when `getRepositories` returns `[null]` ([ad89d101](https://github.com/atom-minimap/minimap-git-diff/commit/ad89d101cbcc93ee3d2e084bfd03bc34b60f786a), [#5](https://github.com/atom-minimap/minimap-git-diff/issues/5))
 
 <a name="v3.1.1"></a>
 # v3.1.1 (2015-01-26)
 
 ## :bug: Bug Fixes
 
-- Fix deprecations ([89e22169](https://github.com/abe33/minimap-git-diff/commit/89e22169a1bdbb476771784c9474b21b5e40f561))
+- Fix deprecations ([89e22169](https://github.com/atom-minimap/minimap-git-diff/commit/89e22169a1bdbb476771784c9474b21b5e40f561))
 
 <a name="v3.1.0"></a>
 # v3.1.0 (2015-01-05)
 
 ## :sparkles: Features
 
-- Implement support for both v3 and v4 API ([84f2b31b](https://github.com/abe33/minimap-git-diff/commit/84f2b31b95ddd7f556c31ac622970c928c500c0e))
+- Implement support for both v3 and v4 API ([84f2b31b](https://github.com/atom-minimap/minimap-git-diff/commit/84f2b31b95ddd7f556c31ac622970c928c500c0e))
 
 <a name="v3.0.11"></a>
 # v3.0.11 (2014-12-05)
 
 ## :bug: Bug Fixes
 
-- Fix error still raised when adding marker to a destroyed buffer ([afc00dd7](https://github.com/abe33/minimap-git-diff/commit/afc00dd79a7aff44fcbdc4840b0eee79376bfdb7))
+- Fix error still raised when adding marker to a destroyed buffer ([afc00dd7](https://github.com/atom-minimap/minimap-git-diff/commit/afc00dd79a7aff44fcbdc4840b0eee79376bfdb7))
 
 <a name="v3.0.10"></a>
 # v3.0.10 (2014-12-05)
@@ -36,8 +36,8 @@
 
 ## :bug: Bug Fixes
 
-- Fix use of deprecated minimap API ([8770ea30](https://github.com/abe33/minimap-git-diff/commit/8770ea3070532a00d3d82621961065e52f420118))
-- Fix broken plugin with latest minimap changes ([b1a2e958](https://github.com/abe33/minimap-git-diff/commit/b1a2e958d6d2731a51f0239ca12156521ebbd1d3))
+- Fix use of deprecated minimap API ([8770ea30](https://github.com/atom-minimap/minimap-git-diff/commit/8770ea3070532a00d3d82621961065e52f420118))
+- Fix broken plugin with latest minimap changes ([b1a2e958](https://github.com/atom-minimap/minimap-git-diff/commit/b1a2e958d6d2731a51f0239ca12156521ebbd1d3))
 
 <a name="v3.0.8"></a>
 # v3.0.8 (2014-10-29)
