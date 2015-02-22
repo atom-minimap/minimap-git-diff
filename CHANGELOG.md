@@ -1,3 +1,10 @@
+<a name="v4.0.0"></a>
+# v4.0.0 (2015-02-22)
+
+## :truck: Migration
+
+- Migrate to atom-minimap organization ([838a7ad3](https://github.com/atom-minimap/minimap-git-diff/commit/838a7ad307d764d308f9bb948714713f8d60a593))
+
 <a name="v3.1.2"></a>
 # v3.1.2 (2015-02-19)
 
