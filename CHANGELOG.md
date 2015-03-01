@@ -1,3 +1,10 @@
+<a name="v4.1.1"></a>
+# v4.1.1 (2015-03-01)
+
+## :sparkles: Features
+
+- Implement minimap service consumer ([cb81bb3a](https://github.com/atom-minimap/minimap-git-diff/commit/cb81bb3ae8b6d844eb2299c1f83b854a10f4b53f))
+
 <a name="v4.0.0"></a>
 # v4.0.0 (2015-02-22)
 
