@@ -1,3 +1,10 @@
+<a name="v4.1.2"></a>
+# v4.1.2 (2015-03-01)
+
+## :bug: Bug Fixes
+
+- Fix bad plugin name in registration ([8ab229a2](https://github.com/atom-minimap/minimap-git-diff/commit/8ab229a2e8a0930f682e6fb9c121c7d6bf7e5d29))
+
 <a name="v4.1.1"></a>
 # v4.1.1 (2015-03-01)
 
