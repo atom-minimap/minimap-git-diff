@@ -11,10 +11,11 @@ class MinimapGitDiff
     @subscriptions = new CompositeDisposable
 
   isActive: -> @pluginActive
+
   activate: ->
 
   consumeMinimapServiceV1: (@minimap) ->
-    @minimap.registerPlugin 'selection', this
+    @minimap.registerPlugin 'git-diff', this
 
   deactivate: ->
     binding.destroy() for id,binding of @bindings
