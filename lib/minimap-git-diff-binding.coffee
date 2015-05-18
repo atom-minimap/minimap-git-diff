@@ -1,4 +1,5 @@
 {CompositeDisposable} = require 'event-kit'
+{repositoryForPath} = require './helpers'
 
 module.exports =
 class MinimapGitDiffBinding
@@ -11,17 +12,23 @@ class MinimapGitDiffBinding
     @markers = null
     @subscriptions = new CompositeDisposable
 
-    repository = @getRepo()
-
     @subscriptions.add @editor.onDidChange @updateDiffs
     @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
 
-    @subscriptions.add repository.onDidChangeStatuses @scheduleUpdate
-    @subscriptions.add repository.onDidChangeStatus @scheduleUpdate
+    if repository = @getRepo()
+      @subscriptions.add repository.onDidChangeStatuses =>
+        @scheduleUpdate()
+      @subscriptions.add repository.onDidChangeStatus (changedPath) =>
+        @scheduleUpdate() if changedPath is @editor.getPath()
 
     @scheduleUpdate()
 
-  scheduleUpdate: => setImmediate(@updateDiffs)
+  cancelUpdate: ->
+    clearImmediate(@immediateId)
+
+  scheduleUpdate: ->
+    @cancelUpdate()
+    @immediateId = setImmediate(@updateDiffs)
 
   updateDiffs: =>
     @removeDecorations()
@@ -60,7 +67,7 @@ class MinimapGitDiffBinding
 
   getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
 
-  getRepo: -> @getRepositories()?[0]
+  getRepo: -> @repository ?= repositoryForPath(@editor.getPath())
 
   getDiffs: ->
     @getRepo()?.getLineDiffs(@getPath(), @editor.getBuffer().getText())
