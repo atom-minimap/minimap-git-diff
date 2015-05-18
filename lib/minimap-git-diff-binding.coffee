@@ -12,7 +12,6 @@ class MinimapGitDiffBinding
     @markers = null
     @subscriptions = new CompositeDisposable
 
-    @subscriptions.add @editor.onDidChange @updateDiffs
     @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
 
     if repository = @getRepo()
