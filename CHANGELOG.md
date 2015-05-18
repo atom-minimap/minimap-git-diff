@@ -1,3 +1,14 @@
+<a name="v4.1.3"></a>
+# v4.1.3 (2015-05-18)
+
+## :bug: Bug Fixes
+
+- Fix issues with project using more than one repo ([19d6fd28](https://github.com/atom-minimap/minimap-git-diff/commit/19d6fd28d81142b5ebe67d4df4e69ef014a3030d), [#12](https://github.com/atom-minimap/minimap-git-diff/issues/12))
+
+## :racehorse: Performances
+
+- Avoid updating on every change ([893ae34f](https://github.com/atom-minimap/minimap-git-diff/commit/893ae34fc6ac85e885a3e8b555485f9b8e1510eb))
+
 <a name="v4.1.2"></a>
 # v4.1.2 (2015-03-01)
 
