@@ -31,8 +31,26 @@ class MinimapGitDiffBinding
 
   updateDiffs: =>
     @removeDecorations()
-    if @getPath() and @diffs = @getDiffs()
-      @addDecorations(@diffs)
+    if @getPath() and diffs = @getDiffs()
+      @addDecorations(diffs)
+      @diffs = diffs
+
+  compareDiffs: (news, olds) ->
+    created = news.filter (n) =>
+      return false for o in olds when @compareDiff(n,o)
+      return true
+
+    destroyed = olds.filter (o) =>
+      return false for n in news when @compareDiff(n,o)
+      return true
+
+    {created, destroyed}
+
+  compareDiff: (a,b) ->
+    a.oldStart is b.oldStart and
+    a.newStart is b.newStart and
+    a.oldLines is b.oldLines and
+    a.newLines is b.newLines
 
   addDecorations: (diffs) ->
     for {oldStart, newStart, oldLines, newLines} in diffs
