@@ -19,6 +19,8 @@ class MinimapGitDiffBinding
         @scheduleUpdate()
       @subscriptions.add repository.onDidChangeStatus (changedPath) =>
         @scheduleUpdate() if changedPath is @editor.getPath()
+      @subscriptions.add repository.onDidDestroy =>
+        @destroy()
 
     @scheduleUpdate()
 
