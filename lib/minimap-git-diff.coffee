@@ -70,6 +70,4 @@ class MinimapGitDiff
     binding.destroy() for id,binding of @bindings
     @bindings = {}
 
-  asDisposable: (subscription) -> new Disposable -> subscription.off()
-
 module.exports = new MinimapGitDiff
