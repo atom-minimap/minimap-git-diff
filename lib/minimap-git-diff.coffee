@@ -1,5 +1,4 @@
-{CompositeDisposable, Disposable} = require 'event-kit'
-{requirePackages} = require 'atom-utils'
+{CompositeDisposable, Disposable} = require 'atom'
 
 MinimapGitDiffBinding = null
 
