@@ -1,3 +1,11 @@
+<a name="v4.1.4"></a>
+# v4.1.4 (2015-07-08)
+
+## :bug: Bug Fixes
+
+- Destroy binding when the repository is destroyed ([4ba6e8d1](https://github.com/atom-minimap/minimap-git-diff/commit/4ba6e8d1b19fc286b6bebbd85e91ea79a315a677), [#12](https://github.com/atom-minimap/minimap-git-diff/issues/12))
+
+
 <a name="v4.1.3"></a>
 # v4.1.3 (2015-05-18)
 
