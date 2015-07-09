@@ -4,7 +4,6 @@ MinimapGitDiffBinding = null
 
 class MinimapGitDiff
 
-  bindings: {}
   pluginActive: false
   constructor: ->
     @subscriptions = new CompositeDisposable
@@ -12,13 +11,13 @@ class MinimapGitDiff
   isActive: -> @pluginActive
 
   activate: ->
+    @bindings = new WeakMap
 
   consumeMinimapServiceV1: (@minimap) ->
     @minimap.registerPlugin 'git-diff', this
 
   deactivate: ->
-    binding.destroy() for id,binding of @bindings
-    @bindings = {}
+    @destroyBindings()
     @gitDiff = null
     @minimap = null
 
@@ -60,14 +59,15 @@ class MinimapGitDiff
 
       return unless editor?
 
-      id = editor.id
       binding = new MinimapGitDiffBinding @gitDiff, minimap
-      @bindings[id] = binding
+      @bindings.set(minimap, binding)
 
   getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
 
   destroyBindings: =>
-    binding.destroy() for id,binding of @bindings
-    @bindings = {}
+    return unless @minimap?
+    for minimap in @minimap.editorsMinimaps
+      @bindings.get(minimap)?.destroy()
+      @bindings.delete(minimap)
 
 module.exports = new MinimapGitDiff
