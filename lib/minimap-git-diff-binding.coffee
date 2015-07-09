@@ -6,7 +6,7 @@ class MinimapGitDiffBinding
 
   active: false
 
-  constructor: (@gitDiff, @minimap) ->
+  constructor: (@minimap) ->
     @editor = @minimap.getTextEditor()
     @decorations = {}
     @markers = null

@@ -18,7 +18,6 @@ class MinimapGitDiff
 
   deactivate: ->
     @destroyBindings()
-    @gitDiff = null
     @minimap = null
 
   activatePlugin: ->
@@ -59,7 +58,7 @@ class MinimapGitDiff
 
       return unless editor?
 
-      binding = new MinimapGitDiffBinding @gitDiff, minimap
+      binding = new MinimapGitDiffBinding minimap
       @bindings.set(minimap, binding)
 
   getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
