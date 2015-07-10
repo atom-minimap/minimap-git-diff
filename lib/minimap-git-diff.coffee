@@ -1,11 +1,9 @@
-{CompositeDisposable, Disposable} = require 'event-kit'
-{requirePackages} = require 'atom-utils'
+{CompositeDisposable, Disposable} = require 'atom'
 
 MinimapGitDiffBinding = null
 
 class MinimapGitDiff
 
-  bindings: {}
   pluginActive: false
   constructor: ->
     @subscriptions = new CompositeDisposable
@@ -13,14 +11,13 @@ class MinimapGitDiff
   isActive: -> @pluginActive
 
   activate: ->
+    @bindings = new WeakMap
 
   consumeMinimapServiceV1: (@minimap) ->
     @minimap.registerPlugin 'git-diff', this
 
   deactivate: ->
-    binding.destroy() for id,binding of @bindings
-    @bindings = {}
-    @gitDiff = null
+    @destroyBindings()
     @minimap = null
 
   activatePlugin: ->
@@ -61,16 +58,15 @@ class MinimapGitDiff
 
       return unless editor?
 
-      id = editor.id
-      binding = new MinimapGitDiffBinding @gitDiff, minimap
-      @bindings[id] = binding
+      binding = new MinimapGitDiffBinding minimap
+      @bindings.set(minimap, binding)
 
   getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
 
   destroyBindings: =>
-    binding.destroy() for id,binding of @bindings
-    @bindings = {}
-
-  asDisposable: (subscription) -> new Disposable -> subscription.off()
+    return unless @minimap?
+    for minimap in @minimap.editorsMinimaps
+      @bindings.get(minimap)?.destroy()
+      @bindings.delete(minimap)
 
 module.exports = new MinimapGitDiff

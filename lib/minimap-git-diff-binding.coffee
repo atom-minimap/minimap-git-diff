@@ -1,4 +1,4 @@
-{CompositeDisposable} = require 'event-kit'
+{CompositeDisposable} = require 'atom'
 {repositoryForPath} = require './helpers'
 
 module.exports =
@@ -6,13 +6,14 @@ class MinimapGitDiffBinding
 
   active: false
 
-  constructor: (@gitDiff, @minimap) ->
+  constructor: (@minimap) ->
     @editor = @minimap.getTextEditor()
     @decorations = {}
     @markers = null
     @subscriptions = new CompositeDisposable
 
     @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
+    @subscriptions.add @minimap.onDidDestroy @destroy
 
     if repository = @getRepo()
       @subscriptions.add repository.onDidChangeStatuses =>
@@ -59,10 +60,11 @@ class MinimapGitDiffBinding
     @markers ?= []
     @markers.push(marker)
 
-  destroy: ->
+  destroy: =>
     @removeDecorations()
     @subscriptions.dispose()
     @diffs = null
+    @minimap = null
 
   getPath: -> @editor.getBuffer()?.getPath()
 
