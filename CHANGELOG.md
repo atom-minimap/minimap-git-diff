@@ -1,3 +1,11 @@
+<a name="v4.1.5"></a>
+# v4.1.5 (2015-07-10)
+
+## :bug: Bug Fixes
+
+- Fix leak bindings ([c1c836c8](https://github.com/atom-minimap/minimap-git-diff/commit/c1c836c8b0f5ce98a737889319c2943dcc3af6f8))
+
+
 <a name="v4.1.4"></a>
 # v4.1.4 (2015-07-08)
 
