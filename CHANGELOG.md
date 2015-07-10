@@ -1,3 +1,10 @@
+<a name="v4.1.6"></a>
+# v4.1.6 (2015-07-10)
+
+## :bug: Bug Fixes
+
+- Fix error raised if no editorsMinimap doesn't exist yet ([c8acb713](https://github.com/atom-minimap/minimap-git-diff/commit/c8acb713c5f9aeb0afc12980e4d7e1c88772197b), [#16](https://github.com/atom-minimap/minimap-git-diff/issues/16))
+
 <a name="v4.1.5"></a>
 # v4.1.5 (2015-07-10)
 
