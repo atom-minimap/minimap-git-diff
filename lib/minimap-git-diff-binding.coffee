@@ -7,10 +7,14 @@ class MinimapGitDiffBinding
   active: false
 
   constructor: (@minimap) ->
-    @editor = @minimap.getTextEditor()
     @decorations = {}
     @markers = null
     @subscriptions = new CompositeDisposable
+
+    unless @minimap?
+      return console.warn 'minimap-git-diff binding created without a minimap'
+
+    @editor = @minimap.getTextEditor()
 
     @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
     @subscriptions.add @minimap.onDidDestroy @destroy
