@@ -1,3 +1,11 @@
+<a name="v4.1.7"></a>
+# v4.1.7 (2015-07-14)
+
+## :bug: Bug Fixes
+
+- Fix error raised when opening a non existing file ([eb450b2c](https://github.com/atom-minimap/minimap-git-diff/commit/eb450b2ceec2f216ecc0b5600b100754880b3d6a), [#16](https://github.com/atom-minimap/minimap-git-diff/issues/16))
+- Fix looping over array while it's actually a Map ([6e7265a5](https://github.com/atom
+
 <a name="v4.1.6"></a>
 # v4.1.6 (2015-07-10)
 
