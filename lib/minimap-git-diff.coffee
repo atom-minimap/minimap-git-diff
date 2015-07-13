@@ -64,7 +64,7 @@ class MinimapGitDiff
   getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
 
   destroyBindings: =>
-    return unless @minimap? or @minimap.editorsMinimaps?
+    return unless @minimap? and @minimap.editorsMinimaps?
     @minimap.editorsMinimaps.forEach (minimap) =>
       @bindings.get(minimap)?.destroy()
       @bindings.delete(minimap)
