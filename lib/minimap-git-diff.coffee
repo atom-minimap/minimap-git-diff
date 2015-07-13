@@ -65,7 +65,7 @@ class MinimapGitDiff
 
   destroyBindings: =>
     return unless @minimap? or @minimap.editorsMinimaps?
-    for minimap in @minimap.editorsMinimaps
+    @minimap.editorsMinimaps.forEach (minimap) =>
       @bindings.get(minimap)?.destroy()
       @bindings.delete(minimap)
 
