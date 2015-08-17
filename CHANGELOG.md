@@ -1,3 +1,10 @@
+<a name="v4.1.8"></a>
+# v4.1.8 (2015-08-17)
+
+## :bug: Bug Fixes
+
+- Fix error still raised when reading the diffs from a destroyed repo ([68544885](https://github.com/atom-minimap/minimap-git-diff/commit/68544885bc51c841da0419465dd7dc260bf50ade), [#14](https://github.com/atom-minimap/minimap-git-diff/issues/14))
+
 <a name="v4.1.7"></a>
 # v4.1.7 (2015-07-14)
 
