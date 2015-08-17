@@ -77,4 +77,7 @@ class MinimapGitDiffBinding
   getRepo: -> @repository ?= repositoryForPath(@editor.getPath())
 
   getDiffs: ->
-    @getRepo()?.getLineDiffs(@getPath(), @editor.getBuffer().getText())
+    try
+      return @getRepo()?.getLineDiffs(@getPath(), @editor.getBuffer().getText())
+    catch e
+      return null
