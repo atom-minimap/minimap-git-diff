@@ -6,15 +6,31 @@
 @import "syntax-variables";
 
 .minimap {
-  .git-line-modified{
-    background: fadeOut(@syntax-color-modified, 50%);
+  .line {
+    .git-line-modified {
+      background: fadeOut(@syntax-color-modified, 50%);
+    }
+
+    .git-line-added {
+      background: fadeOut(@syntax-color-added, 40%);
+    }
+
+    .git-line-removed {
+      background: fadeOut(@syntax-color-removed, 30%);
+    }
   }
 
-  .git-line-added {
-    background: fadeOut(@syntax-color-added, 40%);
-  }
+  .gutter {
+    .git-line-modified {
+      background: @syntax-color-modified;
+    }
 
-  .git-line-removed {
-    background: fadeOut(@syntax-color-removed, 30%);
+    .git-line-added {
+      background: @syntax-color-added;
+    }
+
+    .git-line-removed {
+      background: @syntax-color-removed;
+    }
   }
 }

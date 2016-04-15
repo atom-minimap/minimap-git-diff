@@ -16,16 +16,18 @@ class MinimapGitDiffBinding
 
     @editor = @minimap.getTextEditor()
 
-    @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
     @subscriptions.add @minimap.onDidDestroy @destroy
 
     if repository = @getRepo()
+      @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
       @subscriptions.add repository.onDidChangeStatuses =>
         @scheduleUpdate()
       @subscriptions.add repository.onDidChangeStatus (changedPath) =>
         @scheduleUpdate() if changedPath is @editor.getPath()
       @subscriptions.add repository.onDidDestroy =>
         @destroy()
+      @subscriptions.add atom.config.observe 'minimap-git-diff.useGutterDecoration', (@useGutterDecoration) =>
+        @scheduleUpdate()
 
     @scheduleUpdate()
 
@@ -46,11 +48,11 @@ class MinimapGitDiffBinding
       startRow = newStart - 1
       endRow = newStart + newLines - 2
       if oldLines is 0 and newLines > 0
-        @markRange(startRow, endRow, '.minimap .git-line-added')
+        @markRange(startRow, endRow, '.git-line-added')
       else if newLines is 0 and oldLines > 0
-        @markRange(startRow, startRow, '.minimap .git-line-removed')
+        @markRange(startRow, startRow, '.git-line-removed')
       else
-        @markRange(startRow, endRow, '.minimap .git-line-modified')
+        @markRange(startRow, endRow, '.git-line-modified')
 
   removeDecorations: ->
     return unless @markers?
@@ -60,7 +62,8 @@ class MinimapGitDiffBinding
   markRange: (startRow, endRow, scope) ->
     return if @editor.displayBuffer.isDestroyed()
     marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
-    @minimap.decorateMarker(marker, type: 'line', scope: scope, plugin: 'git-diff')
+    type = if @useGutterDecoration then 'gutter' else 'line'
+    @minimap.decorateMarker(marker, {type, scope: ".minimap .#{type} #{scope}", plugin: 'git-diff'})
     @markers ?= []
     @markers.push(marker)
 
