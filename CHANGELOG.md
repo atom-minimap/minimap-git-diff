@@ -1,3 +1,11 @@
+<a name="v4.3.0"></a>
+# v4.3.0 (2016-04-16)
+
+## :sparkles: Features
+
+- Add support for gutter decorations ([2cc91b81](https://github.com/atom-minimap/minimap-git-diff/commit/2cc91b81daeee50d55828a22e44717f15fea3e73))
+  <br>As promised in #21
+
 <a name="v4.2.0"></a>
 # v4.2.0 (2016-03-07)
 
