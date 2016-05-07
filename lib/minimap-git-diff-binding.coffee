@@ -60,7 +60,7 @@ class MinimapGitDiffBinding
     @markers = null
 
   markRange: (startRow, endRow, scope) ->
-    return if @editor.displayBuffer.isDestroyed()
+    return if @editor.isDestroyed()
     marker = @editor.markBufferRange([[startRow, 0], [endRow, Infinity]], invalidate: 'never')
     type = if @useGutterDecoration then 'gutter' else 'line'
     @minimap.decorateMarker(marker, {type, scope: ".minimap .#{type} #{scope}", plugin: 'git-diff'})
