@@ -8,7 +8,7 @@ class MinimapGitDiff
     useGutterDecoration:
       type: 'boolean'
       default: false
-      description: 'When enabled the gif diffs will be displayed as thin vertical lines on the left side of the minimap.'
+      description: 'When enabled the git diffs will be displayed as thin vertical lines on the left side of the minimap.'
 
   pluginActive: false
   constructor: ->
