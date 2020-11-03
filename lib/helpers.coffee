@@ -1,9 +1,8 @@
-fs = require "fs-plus"
-path = require "path"
+{Directory} = require "atom"
 
 module.exports =
   repositoryForPath: (goalPath) ->
-    for directory, i in atom.project.getDirectories()
-      if goalPath is directory.getPath() or directory.contains(goalPath)
-        return atom.project.getRepositories()[i]
-    null
+    if goalPath
+      directory = new Directory goalPath
+      return atom.project.repositoryForDirectory directory
+    Promise.resolve(null)

@@ -18,16 +18,18 @@ class MinimapGitDiffBinding
 
     @subscriptions.add @minimap.onDidDestroy @destroy
 
-    if repository = @getRepo()
-      @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
-      @subscriptions.add repository.onDidChangeStatuses =>
-        @scheduleUpdate()
-      @subscriptions.add repository.onDidChangeStatus (changedPath) =>
-        @scheduleUpdate() if changedPath is @editor.getPath()
-      @subscriptions.add repository.onDidDestroy =>
-        @destroy()
-      @subscriptions.add atom.config.observe 'minimap-git-diff.useGutterDecoration', (@useGutterDecoration) =>
-        @scheduleUpdate()
+    @getRepo().then (repo) =>
+      @repository = repo
+      if repo
+        @subscriptions.add @editor.getBuffer().onDidStopChanging @updateDiffs
+        @subscriptions.add @repository.onDidChangeStatuses =>
+          @scheduleUpdate()
+        @subscriptions.add @repository.onDidChangeStatus (changedPath) =>
+          @scheduleUpdate() if changedPath is @editor.getPath()
+        @subscriptions.add @repository.onDidDestroy =>
+          @destroy()
+        @subscriptions.add atom.config.observe 'minimap-git-diff.useGutterDecoration', (@useGutterDecoration) =>
+          @scheduleUpdate()
 
     @scheduleUpdate()
 
@@ -75,12 +77,10 @@ class MinimapGitDiffBinding
 
   getPath: -> @editor.getBuffer()?.getPath()
 
-  getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
-
-  getRepo: -> @repository ?= repositoryForPath(@editor.getPath())
+  getRepo: -> repositoryForPath(@editor.getPath())
 
   getDiffs: ->
     try
-      return @getRepo()?.getLineDiffs(@getPath(), @editor.getBuffer().getText())
+      return @repository?.getLineDiffs(@getPath(), @editor.getBuffer()?.getText())
     catch e
       return null
