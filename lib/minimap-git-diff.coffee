@@ -30,10 +30,10 @@ class MinimapGitDiff
     return if @pluginActive
 
     try
-      @activateBinding()
+      @createBindings()
       @pluginActive = true
 
-      @subscriptions.add @minimap.onDidActivate @activateBinding
+      @subscriptions.add @minimap.onDidActivate @createBindings
       @subscriptions.add @minimap.onDidDeactivate @destroyBindings
     catch e
       console.log e
@@ -44,16 +44,6 @@ class MinimapGitDiff
     @pluginActive = false
     @subscriptions.dispose()
     @destroyBindings()
-
-  activateBinding: =>
-    @createBindings() if @getRepositories().length > 0
-
-    @subscriptions.add atom.project.onDidChangePaths =>
-
-      if @getRepositories().length > 0
-        @createBindings()
-      else
-        @destroyBindings()
 
   createBindings: =>
     MinimapGitDiffBinding ||= require './minimap-git-diff-binding'
@@ -66,8 +56,6 @@ class MinimapGitDiff
 
       binding = new MinimapGitDiffBinding minimap
       @bindings.set(minimap, binding)
-
-  getRepositories: -> atom.project.getRepositories().filter (repo) -> repo?
 
   destroyBindings: =>
     return unless @minimap? and @minimap.editorsMinimaps?

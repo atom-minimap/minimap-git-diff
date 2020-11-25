@@ -15,9 +15,5 @@
         "1.0.0": "consumeMinimapServiceV1"
       }
     }
-  },
-  "dependencies": {
-    "mixto": "1.x",
-    "fs-plus": "^2.0.0"
   }
 }
