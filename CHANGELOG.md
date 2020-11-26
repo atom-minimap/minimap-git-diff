@@ -1,3 +1,11 @@
+## [4.3.2](https://github.com/atom-minimap/minimap-git-diff/compare/v4.3.1...v4.3.2) (2020-11-26)
+
+
+### Bug Fixes
+
+* decaffeinate ([ada84e0](https://github.com/atom-minimap/minimap-git-diff/commit/ada84e07ba93350a6ad72eb639083245d92092d0))
+* release with semantic release ([4feb3fb](https://github.com/atom-minimap/minimap-git-diff/commit/4feb3fbf51c9e8290de7d385ce3ee8bd303d0e1a))
+
 <a name="v4.3.1"></a>
 # v4.3.1 (2016-05-07)
 
@@ -264,4 +272,4 @@
 - Adds screenshot ion README ([b413fec7](https://github.com/atom-minimap/minimap-git-diff/commit/b413fec7200efd6fd5fda73eb3147c7dc3572fd8))
 - Adds screenshot ([3b3bd8d9](https://github.com/atom-minimap/minimap-git-diff/commit/3b3bd8d9a2d8aa46ca033255eedb942f4a5d1445))
 - Adds hooks on minimap updates ([7eeb6d1d](https://github.com/atom-minimap/minimap-git-diff/commit/7eeb6d1da2801112218ff304d7891b40494f770f))
-- Implements the minimap diff display and update ([74b8b478](https://github.com/atom-minimap/minimap-git-diff/commit/74b8b478b165d0ef62a859a5593196ccb3e97e33))  
+- Implements the minimap diff display and update ([74b8b478](https://github.com/atom-minimap/minimap-git-diff/commit/74b8b478b165d0ef62a859a5593196ccb3e97e33))
