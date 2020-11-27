@@ -31,5 +31,8 @@
         "1.0.0": "consumeMinimapServiceV1"
       }
     }
-  }
+  },
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ]
 }
