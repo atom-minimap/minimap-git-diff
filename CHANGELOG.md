@@ -1,3 +1,10 @@
+## [4.3.3](https://github.com/atom-minimap/minimap-git-diff/compare/v4.3.2...v4.3.3) (2020-11-27)
+
+
+### Bug Fixes
+
+* add activation hook ([#36](https://github.com/atom-minimap/minimap-git-diff/issues/36)) ([4a46373](https://github.com/atom-minimap/minimap-git-diff/commit/4a46373de6fed95cc70b7356ed47430cb471e03d))
+
 ## [4.3.2](https://github.com/atom-minimap/minimap-git-diff/compare/v4.3.1...v4.3.2) (2020-11-26)
 
 
