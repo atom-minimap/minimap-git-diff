@@ -1,3 +1,10 @@
+## [4.3.4](https://github.com/atom-minimap/minimap-git-diff/compare/v4.3.3...v4.3.4) (2020-11-28)
+
+
+### Bug Fixes
+
+* add minimap as dependency ([dc98d64](https://github.com/atom-minimap/minimap-git-diff/commit/dc98d646615c01de2ca321603dff559e5dbb82f4))
+
 ## [4.3.3](https://github.com/atom-minimap/minimap-git-diff/compare/v4.3.2...v4.3.3) (2020-11-27)
 
 
